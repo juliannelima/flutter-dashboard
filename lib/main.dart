@@ -39,9 +39,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context).size.width >= 450;
-
-    return media ? const WebWidget() : const MobileWidget();
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        if (constraints.maxWidth > 600) {
+          return const WebWidget();
+        } else {
+          return const MobileWidget();
+        }
+      },
+    );
   }
 }
 
