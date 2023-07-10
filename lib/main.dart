@@ -15,16 +15,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         // useMaterial3: true,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          title: const Text('Dashboard'),
-        ),
-        body: const Home(),
-      ),
+      home: const Home(),
     );
   }
 }
@@ -51,18 +42,41 @@ class _HomeState extends State<Home> {
   }
 }
 
-class WebWidget extends StatelessWidget {
+class WebWidget extends StatefulWidget {
   const WebWidget({super.key});
 
   @override
+  State<WebWidget> createState() => _WebWidgetState();
+}
+
+class _WebWidgetState extends State<WebWidget> {
+  var showMenu = true;
+
+  void toogleMenu() {
+    setState(() {
+      showMenu = !showMenu;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        DrawerWidget(),
-        Expanded(
-          child: MainWidget(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: toogleMenu,
         ),
-      ],
+        title: const Text('Dashboard Web'),
+      ),
+      body: Row(
+        children: [
+          showMenu ? const DrawerWebWidget() : Container(),
+          const Expanded(
+            child: MainWidget(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -72,37 +86,73 @@ class MobileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: double.infinity,
-      child: MainWidget(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text('Dashboard Mobile'),
+      ),
+      drawer: const Drawer(
+        child: MenuWidget(
+          header: true,
+        ),
+      ),
+      body: const SizedBox(
+        width: double.infinity,
+        child: MainWidget(),
+      ),
     );
   }
 }
 
-class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+class DrawerWebWidget extends StatelessWidget {
+  const DrawerWebWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: const [
-          ListTile(
-            leading: Icon(
-              Icons.arrow_right_outlined,
-              size: 32,
-            ),
-            title: Text('Menu'),
+    return const Drawer(
+      child: MenuWidget(),
+    );
+  }
+}
+
+class MenuWidget extends StatelessWidget {
+  final bool header;
+
+  const MenuWidget({
+    super.key,
+    this.header = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        header
+            ? Container(
+                color: Colors.blue,
+                child: Row(
+                  children: [
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                    const Text('Dashboard')
+                  ],
+                ),
+              )
+            : Container(),
+        const ListTile(
+          leading: Icon(
+            Icons.arrow_right_outlined,
+            size: 32,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.arrow_right_outlined,
-              size: 32,
-            ),
-            title: Text('Menu'),
-          )
-        ],
-      ),
+          title: Text('Menu'),
+        ),
+        const ListTile(
+          leading: Icon(
+            Icons.arrow_right_outlined,
+            size: 32,
+          ),
+          title: Text('Menu'),
+        )
+      ],
     );
   }
 }
@@ -115,6 +165,7 @@ class MainWidget extends StatelessWidget {
     return Container(
       height: double.infinity,
       color: Colors.blueGrey,
+      child: const Center(child: Text('Main')),
     );
   }
 }
