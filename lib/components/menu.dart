@@ -13,14 +13,13 @@ class MenuWidget extends StatelessWidget {
     return ListView(
       children: [
         header
-            ? Container(
-                color: Colors.blue,
-                child: Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-                    const Text('Dashboard')
-                  ],
-                ),
+            ? AppBar(
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back)),
+                title: const Text('Dashboard Menu'),
               )
             : Container(),
         const ListTile(
