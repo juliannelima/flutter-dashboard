@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/main.dart';
+import '../components/content.dart';
 import '../components/menu.dart';
 
 class WebWidget extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/main.dart';
+import '../components/content.dart';
 import '../components/menu.dart';
 
 class MobileWidget extends StatelessWidget {
@@ -10,7 +10,6 @@ class MobileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: const Text('Dashboard Mobile'),
       ),
       drawer: const Drawer(
